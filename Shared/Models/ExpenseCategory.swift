@@ -11,11 +11,11 @@ enum ExpenseCategory: String, CaseIterable, Identifiable, Sendable {
 
     var displayName: String {
         switch self {
-        case .food: "Food"
-        case .transport: "Transport"
-        case .shopping: "Shopping"
-        case .entertainment: "Entertainment"
-        case .other: "Other"
+        case .food: "餐饮"
+        case .transport: "交通"
+        case .shopping: "购物"
+        case .entertainment: "娱乐"
+        case .other: "其他"
         }
     }
 

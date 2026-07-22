@@ -18,6 +18,6 @@ struct PointsBadgeView: View {
         .font(.subheadline.bold())
         .foregroundStyle(.orange)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Points: \(total)")
+        .accessibilityLabel("积分：\(total)")
     }
 }

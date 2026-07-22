@@ -4,14 +4,14 @@ import SwiftUI
 struct CalendarScreen: View {
     @State private var visibleMonth = MonthMath.startOfMonth(
         containing: Date(),
-        calendar: .current
+        calendar: AppLocalization.calendar
     )
     @State private var selectedDay: DayKey?
 
     @Query private var diaryEntries: [DiaryEntry]
     @Query private var expenses: [ExpenseRecord]
 
-    private let calendar = Calendar.current
+    private let calendar = AppLocalization.calendar
 
     private var summaries: [String: DaySummary] {
         DaySummaryBuilder.build(
@@ -32,6 +32,7 @@ struct CalendarScreen: View {
             Spacer()
         }
         .padding(.horizontal)
+        .environment(\.locale, AppLocalization.locale)
         .sheet(item: $selectedDay) { day in
             DayDetailSheet(dayKey: day)
         }
@@ -44,11 +45,11 @@ struct CalendarScreen: View {
             } label: {
                 Image(systemName: "chevron.left")
             }
-            .accessibilityLabel("Previous month")
+            .accessibilityLabel("上个月")
 
             Spacer()
 
-            Text(visibleMonth.formatted(.dateTime.year().month(.wide)))
+            Text(visibleMonth, format: .dateTime.year().month(.wide))
                 .font(.title3.bold())
 
             Spacer()
@@ -58,7 +59,7 @@ struct CalendarScreen: View {
             } label: {
                 Image(systemName: "chevron.right")
             }
-            .accessibilityLabel("Next month")
+            .accessibilityLabel("下个月")
         }
         .padding(.top)
     }

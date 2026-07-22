@@ -11,6 +11,7 @@ struct RootView: View {
                     }
                 }
         }
+        .environment(\.locale, AppLocalization.locale)
     }
 }
 

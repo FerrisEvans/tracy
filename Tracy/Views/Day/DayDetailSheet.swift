@@ -40,24 +40,33 @@ struct DayDetailSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Done") { dismiss() }
+                    Button("完成") { dismiss() }
                 }
             }
             .alert(
-                "Something went wrong",
+                "出错了",
                 isPresented: Binding(
                     get: { errorMessage != nil },
                     set: { if !$0 { errorMessage = nil } }
                 )
             ) {
-                Button("OK", role: .cancel) { errorMessage = nil }
+                Button("好", role: .cancel) { errorMessage = nil }
             } message: {
                 Text(errorMessage ?? "")
             }
         }
+        .environment(\.locale, AppLocalization.locale)
     }
 
     private var title: String {
-        dayKey.date().map { $0.formatted(date: .abbreviated, time: .omitted) } ?? dayKey.value
+        // Built outside a `Text`, so the environment locale doesn't apply —
+        // pin the Chinese locale explicitly on the format style.
+        guard let date = dayKey.date(calendar: AppLocalization.calendar) else {
+            return dayKey.value
+        }
+        return date.formatted(
+            Date.FormatStyle(date: .abbreviated, time: .omitted)
+                .locale(AppLocalization.locale)
+        )
     }
 }

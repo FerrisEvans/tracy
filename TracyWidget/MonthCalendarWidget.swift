@@ -55,15 +55,16 @@ struct MonthCalendarProvider: TimelineProvider {
 struct MonthCalendarWidgetView: View {
     var entry: MonthCalendarEntry
 
-    private let calendar = Calendar.current
+    private let calendar = AppLocalization.calendar
 
     var body: some View {
         VStack(spacing: 4) {
-            Text(entry.date.formatted(.dateTime.year().month(.wide)))
+            Text(entry.date, format: .dateTime.year().month(.wide))
                 .font(.caption.bold())
             monthGrid
         }
         .containerBackground(.background, for: .widget)
+        .environment(\.locale, AppLocalization.locale)
     }
 
     private var monthGrid: some View {
@@ -121,8 +122,8 @@ struct MonthCalendarWidget: Widget {
         StaticConfiguration(kind: "MonthCalendarWidget", provider: MonthCalendarProvider()) { entry in
             MonthCalendarWidgetView(entry: entry)
         }
-        .configurationDisplayName("Month Overview")
-        .description("Days with diary entries and expenses at a glance.")
+        .configurationDisplayName("本月概览")
+        .description("一览本月记了日记和账的日子。")
         .supportedFamilies([.systemMedium, .systemLarge])
     }
 }

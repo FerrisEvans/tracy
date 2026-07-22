@@ -17,10 +17,10 @@ struct DiarySection: View {
     }
 
     var body: some View {
-        Section("Diary") {
+        Section("日记") {
             TextEditor(text: $draft)
                 .frame(minHeight: 120)
-                .accessibilityLabel("Diary text")
+                .accessibilityLabel("日记内容")
             HStack {
                 if justEarnedPoints {
                     Label("+\(PointsService.pointsPerDiary)", systemImage: "star.fill")
@@ -29,7 +29,7 @@ struct DiarySection: View {
                         .transition(.scale.combined(with: .opacity))
                 }
                 Spacer()
-                Button("Save") { save() }
+                Button("保存") { save() }
                     .disabled(trimmedDraft.isEmpty)
             }
         }
@@ -56,7 +56,7 @@ struct DiarySection: View {
             try context.save()
             WidgetCenter.shared.reloadAllTimelines()
         } catch {
-            onError("Could not save the diary entry. Please try again.")
+            onError("日记保存失败，请重试。")
         }
     }
 }

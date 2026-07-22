@@ -14,16 +14,16 @@ struct ExpenseSection: View {
     @State private var note = ""
 
     var body: some View {
-        Section("Expenses") {
+        Section("记账") {
             ForEach(expenses) { expense in
                 ExpenseRowView(expense: expense, currencyCode: currencyCode)
             }
             .onDelete(perform: delete)
 
             HStack {
-                TextField("Amount", text: $amountText)
+                TextField("金额", text: $amountText)
                     .keyboardType(.decimalPad)
-                Picker("Category", selection: $category) {
+                Picker("分类", selection: $category) {
                     ForEach(ExpenseCategory.allCases) { category in
                         Label(category.displayName, systemImage: category.symbolName)
                             .tag(category)
@@ -33,11 +33,11 @@ struct ExpenseSection: View {
                 // Keep the menu from greedily expanding over the Add button's
                 // tap area, and give Add its own hit region within the row.
                 .fixedSize()
-                Button("Add") { add() }
+                Button("添加") { add() }
                     .buttonStyle(.borderless)
                     .disabled(parsedAmount == nil)
             }
-            TextField("Note (optional)", text: $note)
+            TextField("备注（可选）", text: $note)
         }
     }
 
@@ -80,7 +80,7 @@ struct ExpenseSection: View {
             try context.save()
             WidgetCenter.shared.reloadAllTimelines()
         } catch {
-            onError("Could not save changes. Please try again.")
+            onError("保存失败，请重试。")
         }
     }
 }
