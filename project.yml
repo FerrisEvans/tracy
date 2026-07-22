@@ -9,7 +9,7 @@ options:
 settings:
   base:
     SWIFT_VERSION: "5.0"
-    MARKETING_VERSION: "0.2.0"
+    MARKETING_VERSION: "0.2.1"
     CURRENT_PROJECT_VERSION: "1"
 
 targets:
@@ -28,8 +28,13 @@ targets:
     info:
       path: Tracy/Info.plist
       properties:
-        CFBundleDisplayName: Tracy
+        CFBundleDisplayName: "日迹"
         CFBundleDevelopmentRegion: zh-Hans
+        # Wire the user-facing version + build number to the MARKETING_VERSION /
+        # CURRENT_PROJECT_VERSION build settings so project.yml is the single
+        # source of truth (otherwise XcodeGen injects a literal "1.0").
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         UILaunchScreen: {}
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
@@ -55,7 +60,9 @@ targets:
     info:
       path: TracyWidget/Info.plist
       properties:
-        CFBundleDisplayName: Tracy
+        CFBundleDisplayName: "日迹"
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     entitlements:

@@ -4,7 +4,7 @@ struct RootView: View {
     var body: some View {
         NavigationStack {
             CalendarScreen()
-                .navigationTitle("Tracy")
+                .navigationTitle("日迹")
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         PointsBadgeView()
